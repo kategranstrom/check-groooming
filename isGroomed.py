@@ -22,8 +22,8 @@ def main():
         print('groomed!')
 
         # text notification
-        account_sid = 'ACc5bd72fe3380ada11fe04830f0c7c1e4'
-        auth_token = 'f57e6003622213c3a0b24e7b23bec59f'
+        account_sid = os.environ['TWILIO_ACCOUNT_SID']
+        auth_token = os.environ['TWILIO_AUTH_TOKEN']
         client = Client(account_sid, auth_token)
         message = client.messages.create(body="Hot Sauce is groomed!", from_='+12513159803', to='+12508371392')
 
