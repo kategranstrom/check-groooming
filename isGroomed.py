@@ -3,6 +3,9 @@ from twilio.rest import Client
 import requests
 from bs4 import BeautifulSoup
 import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 
 def main():
     print("Checking if south bowl is groomed")
@@ -27,8 +30,18 @@ def main():
         client = Client(account_sid, auth_token)
         message = client.messages.create(body="Hot Sauce is groomed!", from_='+12513159803', to='+12508371392')
 
+        # email notification
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.starttls()
+        s.login('kategranstrom2000@gmail.com', os.environ['EMAIL_PASSWORD'])
+        msg = MIMEMultipart()
+        msg['FROM'] = 'kategranstrom2000@gmail.com'
+        msg['To'] = 'goobies@telus.net'
+        msg['Subject'] = 'Hot Sauce is Groomed!'
 
-
+        s.send_message(msg)
+        del msg
+        s.quit()
 
 if __name__ == "__main__":
     main()
